@@ -443,7 +443,7 @@ void PerformTransmogrification (Player* player, uint32 itemEntry, uint32 cost)
     }
     TransmogAcoreStrings res = sT->Transmogrify(player, itemEntry, slot);
     if (res == LANG_ERR_TRANSMOG_OK)
-        session->SendAreaTriggerMessage("%s",GTS(LANG_ERR_TRANSMOG_OK));
+        session->SendAreaTriggerMessage("{}",GTS(LANG_ERR_TRANSMOG_OK));
     else
         ChatHandler(session).SendNotification(res);
 }
@@ -457,7 +457,7 @@ void RemoveTransmogrification (Player* player)
         if (sT->GetFakeEntry(newItem->GetGUID()))
         {
             sT->DeleteFakeEntry(player, slot, newItem);
-            session->SendAreaTriggerMessage("%s", GTS(LANG_ERR_UNTRANSMOG_OK));
+            session->SendAreaTriggerMessage("{}", GTS(LANG_ERR_UNTRANSMOG_OK));
         }
         else
             ChatHandler(session).SendNotification(LANG_ERR_UNTRANSMOG_NO_TRANSMOGS);
@@ -543,12 +543,10 @@ public:
 
                 bool useVendorInterface = player->GetPlayerSetting("mod-transmog", SETTING_VENDOR_INTERFACE).IsEnabled();
 
-                if (sT->GetUseVendorInterface())
-                    useVendorInterface ? ShowTransmogItemsInFakeVendor(player, creature, action) :
-                    ShowTransmogItemsInGossipMenu(player, creature, action, sender);
-                else
-                    useVendorInterface ? ShowTransmogItemsInGossipMenu(player, creature, action, sender) :
+                if (sT->GetUseVendorInterface() || useVendorInterface)
                     ShowTransmogItemsInFakeVendor(player, creature, action);
+                else
+                    ShowTransmogItemsInGossipMenu(player, creature, action, sender);
 
                 break;
             }
@@ -571,7 +569,7 @@ public:
                 }
                 if (removed)
                 {
-                    session->SendAreaTriggerMessage("%s", GTS(LANG_ERR_UNTRANSMOG_OK));
+                    session->SendAreaTriggerMessage("{}", GTS(LANG_ERR_UNTRANSMOG_OK));
                     CharacterDatabase.CommitTransaction(trans);
                 }
                 else
