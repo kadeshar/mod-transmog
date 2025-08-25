@@ -285,19 +285,19 @@ public:
             return true;
         }
 
-        if (!sTransmogrification->IsTransmogPlusEnabled)
-        {
-            handler->SendErrorMessage("The portable transmogrification NPC is a plus feature. Plus features are currently disabled.");
-            return true;
-        }
+        //if (!sTransmogrification->IsTransmogPlusEnabled)
+        //{
+        //    handler->SendErrorMessage("The portable transmogrification NPC is a plus feature. Plus features are currently disabled.");
+        //    return true;
+        //}
 
         Player* player = PlayerIdentifier::FromSelf(handler)->GetConnectedPlayer();
 
-        if (!sTransmogrification->IsPlusFeatureEligible(player->GetGUID(), PLUS_FEATURE_PET))
-        {
-            handler->SendErrorMessage("You are not eligible for the portable transmogrification NPC. Please check your subscription level.");
-            return true;
-        }
+        //if (!sTransmogrification->IsPlusFeatureEligible(player->GetGUID(), PLUS_FEATURE_PET))
+        //{
+        //    handler->SendErrorMessage("You are not eligible for the portable transmogrification NPC. Please check your subscription level.");
+        //    return true;
+        //}
 
         if (!sSpellMgr->GetSpellInfo(sTransmogrification->PetSpellId))
         {
