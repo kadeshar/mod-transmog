@@ -1216,33 +1216,8 @@ class WS_Transmogrification : public WorldScript
 {
 public:
     WS_Transmogrification() : WorldScript("WS_Transmogrification", {
-        WORLDHOOK_ON_AFTER_CONFIG_LOAD,
         WORLDHOOK_ON_STARTUP
     }) { }
-
-    void OnAfterConfigLoad(bool reload) override
-    {
-        sT->LoadConfig(reload);
-        if (sT->GetUseCollectionSystem())
-        {
-            LOG_INFO("module", "Loading transmog appearance collection cache....");
-            uint32 collectedAppearanceCount = 0;
-            QueryResult result = CharacterDatabase.Query("SELECT account_id, item_template_id FROM custom_unlocked_appearances");
-            if (result)
-            {
-                do
-                {
-                    uint32 accountId = (*result)[0].Get<uint32>();
-                    uint32 itemId = (*result)[1].Get<uint32>();
-                    if (sT->AddCollectedAppearance(accountId, itemId))
-                    {
-                        collectedAppearanceCount++;
-                    }
-                } while (result->NextRow());
-            }
-            LOG_INFO("module", "Loaded {} collected appearances into cache", collectedAppearanceCount);
-        }
-    }
 
     void OnStartup() override
     {
@@ -1255,6 +1230,8 @@ public:
         // Dont delete even if player has more presets than should
         CharacterDatabase.Execute("DELETE FROM `custom_transmogrification_sets` WHERE NOT EXISTS(SELECT 1 FROM characters WHERE characters.guid = custom_transmogrification_sets.Owner)");
 #endif
+
+        sT->LoadCollections();
     }
 };
 
