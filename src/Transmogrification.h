@@ -31,6 +31,7 @@ enum TransmogSettings
     SETTING_HIDE_TRANSMOG             = 0,
     SETTING_RETROACTIVE_CHECK         = 1,
     SETTING_VENDOR_INTERFACE          = 2,
+    SETTING_HIDE_SET_DISCLAIMER       = 3,
 
     // Subscriptions
     SETTING_TRANSMOG_MEMBERSHIP_LEVEL = 0
@@ -43,31 +44,99 @@ enum MixedWeaponSettings
     MIXED_WEAPONS_LOOSE  = 2
 };
 
-enum TransmogAcoreStrings // Language.h might have same entries, appears when executing SQL, change if needed
+enum TransmogStrings : uint32
 {
-    LANG_ERR_TRANSMOG_OK = 11100, // change this
-    LANG_ERR_TRANSMOG_INVALID_SLOT,
-    LANG_ERR_TRANSMOG_INVALID_SRC_ENTRY,
-    LANG_ERR_TRANSMOG_MISSING_SRC_ITEM,
-    LANG_ERR_TRANSMOG_MISSING_DEST_ITEM,
-    LANG_ERR_TRANSMOG_INVALID_ITEMS,
-    LANG_ERR_TRANSMOG_NOT_ENOUGH_MONEY,
-    LANG_ERR_TRANSMOG_NOT_ENOUGH_TOKENS,
-
-    LANG_ERR_UNTRANSMOG_OK,
-    LANG_ERR_UNTRANSMOG_NO_TRANSMOGS,
-
-#ifdef PRESETS
-    LANG_PRESET_ERR_INVALID_NAME,
-#endif
-    LANG_CMD_TRANSMOG_SHOW = 11111,
-    LANG_CMD_TRANSMOG_HIDE = 11112,
-    LANG_CMD_TRANSMOG_ADD_UNSUITABLE = 11113,
-    LANG_CMD_TRANSMOG_ADD_FORBIDDEN = 11114,
-    LANG_CMD_TRANSMOG_BEGIN_SYNC = 11115,
-    LANG_CMD_TRANSMOG_COMPLETE_SYNC = 11116,
-    LANG_CMD_TRANSMOG_VENDOR_INTERFACE_ENABLE = 11117,
-    LANG_CMD_TRANSMOG_VENDOR_INTERFACE_DISABLE = 11118
+    // Transmog result strings
+    LANG_TRANSMOG_OK                           = 1,
+    LANG_TRANSMOG_INVALID_SLOT                 = 2,
+    LANG_TRANSMOG_INVALID_SRC_ENTRY            = 3,
+    LANG_TRANSMOG_MISSING_SRC_ITEM             = 4,
+    LANG_TRANSMOG_MISSING_DEST_ITEM            = 5,
+    LANG_TRANSMOG_INVALID_ITEMS                = 6,
+    LANG_TRANSMOG_NOT_ENOUGH_MONEY             = 7,
+    LANG_TRANSMOG_NOT_ENOUGH_TOKENS            = 8,
+    LANG_TRANSMOG_UNTRANSMOG_OK                = 9,
+    LANG_TRANSMOG_UNTRANSMOG_NO_TRANSMOGS      = 10,
+    LANG_TRANSMOG_PRESET_ERR_INVALID_NAME      = 11,
+    // Command strings
+    LANG_TRANSMOG_CMD_SHOW                     = 12,
+    LANG_TRANSMOG_CMD_HIDE                     = 13,
+    LANG_TRANSMOG_CMD_ADD_UNSUITABLE           = 14,
+    LANG_TRANSMOG_CMD_ADD_FORBIDDEN            = 15,
+    LANG_TRANSMOG_CMD_BEGIN_SYNC               = 16,
+    LANG_TRANSMOG_CMD_COMPLETE_SYNC            = 17,
+    LANG_TRANSMOG_CMD_VENDOR_INTERFACE_ENABLE  = 18,
+    LANG_TRANSMOG_CMD_VENDOR_INTERFACE_DISABLE = 19,
+    // Gossip/UI strings
+    LANG_TRANSMOG_HOWWORKS                     = 20,
+    LANG_TRANSMOG_MANAGESETS                   = 21,
+    LANG_TRANSMOG_REMOVETRANSMOG               = 22,
+    LANG_TRANSMOG_REMOVETRANSMOG_ASK           = 23,
+    LANG_TRANSMOG_UPDATEMENU                   = 24,
+    LANG_TRANSMOG_HOWSETSWORK                  = 25,
+    LANG_TRANSMOG_SAVESET                      = 26,
+    LANG_TRANSMOG_BACK                         = 27,
+    LANG_TRANSMOG_USESET                       = 28,
+    LANG_TRANSMOG_CONFIRM_USESET               = 29,
+    LANG_TRANSMOG_DELETESET                    = 30,
+    LANG_TRANSMOG_CONFIRM_DELETESET            = 31,
+    LANG_TRANSMOG_INSERTSETNAME                = 32,
+    LANG_TRANSMOG_SEARCH                       = 33,
+    LANG_TRANSMOG_SEARCHING_FOR                = 34,
+    LANG_TRANSMOG_SEARCH_FOR_ITEM              = 35,
+    LANG_TRANSMOG_CONFIRM_HIDE_ITEM            = 36,
+    LANG_TRANSMOG_HIDESLOT                     = 37,
+    LANG_TRANSMOG_REMOVETRANSMOG_SLOT          = 38,
+    LANG_TRANSMOG_CONFIRM_USEITEM              = 39,
+    LANG_TRANSMOG_PREVIOUS_PAGE                = 40,
+    LANG_TRANSMOG_NEXT_PAGE                    = 41,
+    LANG_TRANSMOG_ADDED_APPEARANCE             = 42,
+    // Disclaimer strings
+    LANG_TRANSMOG_SET_DISCLAIMER               = 43,
+    LANG_TRANSMOG_CMD_DISCLAIMER_ON            = 44,
+    LANG_TRANSMOG_CMD_DISCLAIMER_OFF           = 45,
+    // Check command: header / info
+    LANG_TRANSMOG_CHECK_HEADER                 = 46,
+    LANG_TRANSMOG_CHECK_DEST                   = 47,
+    LANG_TRANSMOG_CHECK_SRC                    = 48,
+    LANG_TRANSMOG_CHECK_PLAYER                 = 49,
+    LANG_TRANSMOG_CHECK_PLAYER_NOT_FOUND       = 50,
+    // Check command: section labels
+    LANG_TRANSMOG_CHECK_SECTION_PAIR           = 51,
+    LANG_TRANSMOG_CHECK_SECTION_ITEM           = 52,
+    LANG_TRANSMOG_CHECK_SECTION_COLL           = 53,
+    // Check command: verdict
+    LANG_TRANSMOG_CHECK_RESULT_OK              = 54,
+    LANG_TRANSMOG_CHECK_RESULT_FAIL            = 55,
+    // Check command: pair fail messages
+    LANG_TRANSMOG_CHECK_PAIR_IDS_SAME          = 56,
+    LANG_TRANSMOG_CHECK_PAIR_DISP_SAME         = 57,
+    LANG_TRANSMOG_CHECK_PAIR_CLASS_FAIL        = 58,
+    LANG_TRANSMOG_CHECK_PAIR_DEST_TYPE_FAIL    = 59,
+    LANG_TRANSMOG_CHECK_PAIR_SRC_TYPE_FAIL     = 60,
+    LANG_TRANSMOG_CHECK_PAIR_RANGED_FAIL       = 61,
+    LANG_TRANSMOG_CHECK_PAIR_SUB_DENIED        = 62,
+    LANG_TRANSMOG_CHECK_PAIR_INV_DENIED        = 63,
+    // Check command: per-item fail messages
+    LANG_TRANSMOG_CHECK_ITEM_WHITELISTED       = 64,
+    LANG_TRANSMOG_CHECK_ITEM_CLASS_FAIL         = 65,
+    LANG_TRANSMOG_CHECK_ITEM_BLACKLISTED       = 66,
+    LANG_TRANSMOG_CHECK_ITEM_QUALITY_FAIL      = 67,
+    LANG_TRANSMOG_CHECK_ITEM_POLE_FAIL         = 68,
+    LANG_TRANSMOG_CHECK_ITEM_EVENT_FAIL        = 69,
+    LANG_TRANSMOG_CHECK_ITEM_STAT_FAIL         = 70,
+    LANG_TRANSMOG_CHECK_ITEM_PROF_FAIL         = 71,
+    LANG_TRANSMOG_CHECK_ITEM_FACTION_FAIL      = 72,
+    LANG_TRANSMOG_CHECK_ITEM_CLASS_REQ_FAIL    = 73,
+    LANG_TRANSMOG_CHECK_ITEM_RACE_REQ_FAIL     = 74,
+    LANG_TRANSMOG_CHECK_ITEM_SKILL_FAIL        = 75,
+    LANG_TRANSMOG_CHECK_ITEM_LEVEL_FAIL        = 76,
+    LANG_TRANSMOG_CHECK_ITEM_SPELL_FAIL        = 77,
+    // Check command: collection fail messages
+    LANG_TRANSMOG_CHECK_COLL_DISABLED          = 78,
+    LANG_TRANSMOG_CHECK_COLL_NOT_FOUND         = 79,
+    // Check command: section pass message (shared by all sections)
+    LANG_TRANSMOG_CHECK_SECTION_OK             = 80,
 };
 
 enum ArmorClassSpellIDs
@@ -203,6 +272,7 @@ public:
     bool TrackUnusableItems;
     bool RetroActiveAppearances;
     bool ResetRetroActiveAppearances;
+    bool ShowSetDisclaimer;
 
     bool IsTransmogEnabled;
     bool IsPortableNPCEnabled;
@@ -226,9 +296,9 @@ public:
     void SetFakeEntry(Player* player, uint32 newEntry, uint8 slot, Item* itemTransmogrified);
     bool AddCollectedAppearance(uint32 accountId, uint32 itemId);
 
-    TransmogAcoreStrings Transmogrify(Player* player, ObjectGuid itemGUID, uint8 slot, /*uint32 newEntry, */bool no_cost = false);
-    TransmogAcoreStrings Transmogrify(Player* player, uint32 itemEntry, uint8 slot, /*uint32 newEntry, */bool no_cost = false);
-    TransmogAcoreStrings Transmogrify(Player* player, Item* itemTransmogrifier, uint8 slot, /*uint32 newEntry, */bool no_cost = false, bool hidden_transmog = false);
+    TransmogStrings Transmogrify(Player* player, ObjectGuid itemGUID, uint8 slot, /*uint32 newEntry, */bool no_cost = false);
+    TransmogStrings Transmogrify(Player* player, uint32 itemEntry, uint8 slot, /*uint32 newEntry, */bool no_cost = false);
+    TransmogStrings Transmogrify(Player* player, Item* itemTransmogrifier, uint8 slot, /*uint32 newEntry, */bool no_cost = false, bool hidden_transmog = false);
     bool CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     bool SuitableForTransmogrification(Player* player, ItemTemplate const* proto) const;
     bool SuitableForTransmogrification(ObjectGuid guid, ItemTemplate const* proto) const;
